@@ -38,7 +38,7 @@ class TestModule(Cog_Extension):
     def votemember(len):
         msg = "```diff\n-投票\n"
         for i in range(int(len)):
-            msg += f"{i+1}號 : {squad[i]} "
+            msg += f"{i+1}號 : <{squad[i]}>   "
         msg += "```"
         return msg
 

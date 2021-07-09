@@ -48,7 +48,7 @@ class Wolfkill_Wolf(Cog_Extension):
         inrandom = random.sample(team, k=len)
         msg = "```diff\n-要殺誰?\n"
         for i in range(int(len)):
-            msg += f"{i+1}號 : {inrandom[i]} "
+            msg += f"{i+1}號 : <{inrandom[i]}>   "
         msg += "```"
         re = []
         re.append(msg)
