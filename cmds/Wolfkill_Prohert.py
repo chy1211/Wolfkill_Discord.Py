@@ -8,8 +8,9 @@ import json
 dc = discord
 
 
-class Wolfkill_Prohert(Cog_Extension):
+class Wolfkill_prophert(Cog_Extension):
     def killwolfkill():
+        print("killwolfkill has been called")
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
         status = jdata["STATUS"]
@@ -26,6 +27,7 @@ class Wolfkill_Prohert(Cog_Extension):
                     break
 
     def killwitchkill():
+        print("killwitchkill has been called")
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
         status = jdata["STATUS"]
@@ -71,7 +73,7 @@ class Wolfkill_Prohert(Cog_Extension):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        async def prohert_count():
+        async def prophert_count():
             await self.bot.wait_until_ready()
             self.channel = self.bot.get_channel(862608218009370624)
             self.guild = self.bot.get_guild(860455839201361960)
@@ -81,7 +83,7 @@ class Wolfkill_Prohert(Cog_Extension):
                     jdata = json.load(setjson)
                 status = jdata["STATUS"]
                 await asyncio.sleep(1)
-                if status["PROHERTCOUNT"] is True:
+                if status["PROPHERTCOUNT"] is True:
                     setjson.close()
                     await self.channel.send("你要查驗誰?")
                     msg = await self.channel.send("思考時間倒數 : 10 秒")
@@ -96,8 +98,8 @@ class Wolfkill_Prohert(Cog_Extension):
                     with open("settings.json", "r", encoding="utf8") as setjson:
                         jdata = json.load(setjson)
                         status = jdata["STATUS"]
-                    if status["PROHERTCOUNT"] is True:
-                        status["PROHERTCOUNT"] = False
+                    if status["PROPHERTCOUNT"] is True:
+                        status["PROPHERTCOUNT"] = False
                         with open("settings.json", "w", encoding="utf8") as setjson:
                             json.dump(jdata, setjson, indent=4)
                         await self.channel.send("本回合沒做任何動作")
@@ -109,8 +111,8 @@ class Wolfkill_Prohert(Cog_Extension):
                             with open("settings.json", "r", encoding="utf8") as setjson:
                                 jdata = json.load(setjson)
                             dict = jdata["SQUAD_TEAM"]
-                            prohert = dict["PROPHET"]
-                            for i in prohert:
+                            prophert = dict["PROPHET"]
+                            for i in prophert:
                                 for member in self.guild.members:
                                     if str(member).startswith(str(i)):
                                         await channels.set_permissions(
@@ -121,24 +123,24 @@ class Wolfkill_Prohert(Cog_Extension):
                             setjson.close()
                         with open("settings.json", "r", encoding="utf8") as setjson:
                             jdata = json.load(setjson)
-                        Wolfkill_Prohert.killwolfkill()
-                        Wolfkill_Prohert.killwitchkill()
+                        Wolfkill_prophert.killwolfkill()
+                        Wolfkill_prophert.killwitchkill()
                         status = jdata["STATUS"]
                         status["DAWN"] = True
                         status["COUNTER"] = 0
                         with open("settings.json", "w", encoding="utf8") as setjson:
                             json.dump(jdata, setjson, indent=4)
 
-        self.bg_task = self.bot.loop.create_task(prohert_count())
+        self.bg_task = self.bot.loop.create_task(prophert_count())
 
     @commands.command()
-    async def Check(self, ctx, id):
+    async def check(self, ctx, id):
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
         dict = jdata["SQUAD_TEAM"]
-        prohert = dict["PROHERT"]
-        if str(ctx.message.author.name) in prohert:
-            checkid = Wolfkill_Prohert.checkid(id)
+        prophert = dict["PROPHET"]
+        if str(ctx.message.author.name) in prophert:
+            checkid = Wolfkill_prophert.checkid(id)
             if checkid is not False:
                 if checkid == "WOLFKING":
                     await ctx.send("查驗完成,他是 狼人")
@@ -147,7 +149,7 @@ class Wolfkill_Prohert(Cog_Extension):
                 elif checkid == "PROPHET" or "WITCH" or "HUNTER" or "CIVILIAN":
                     await ctx.send("查驗完成,他是 好人")
                 status = jdata["STATUS"]
-                status["PROHERTCOUNT"] = False
+                status["PROPHERTCOUNT"] = False
                 with open("settings.json", "w", encoding="utf8") as setjson:
                     json.dump(jdata, setjson, indent=4)
                 await ctx.send("預言家請閉眼")
@@ -158,8 +160,8 @@ class Wolfkill_Prohert(Cog_Extension):
                         with open("settings.json", "r", encoding="utf8") as setjson:
                             jdata = json.load(setjson)
                         dict = jdata["SQUAD_TEAM"]
-                        prohert = dict["PROPHET"]
-                        for i in prohert:
+                        prophert = dict["PROPHET"]
+                        for i in prophert:
                             for member in ctx.guild.members:
                                 if str(member).startswith(str(i)):
                                     await channels.set_permissions(
@@ -169,8 +171,8 @@ class Wolfkill_Prohert(Cog_Extension):
                     with open("settings.json", "r", encoding="utf8") as setjson:
                         jdata = json.load(setjson)
                     status = jdata["STATUS"]
-                    Wolfkill_Prohert.killwolfkill()
-                    Wolfkill_Prohert.killwitchkill()
+                    Wolfkill_prophert.killwolfkill()
+                    Wolfkill_prophert.killwitchkill()
                     status["DAWN"] = True
                     status["COUNTER"] = 0
                     with open("settings.json", "w", encoding="utf8") as setjson:
@@ -182,4 +184,4 @@ class Wolfkill_Prohert(Cog_Extension):
 
 
 def setup(bot):
-    bot.add_cog(Wolfkill_Prohert(bot))
+    bot.add_cog(Wolfkill_prophert(bot))

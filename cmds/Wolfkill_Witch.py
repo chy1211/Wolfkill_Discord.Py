@@ -172,7 +172,7 @@ class Wolfkill_Witch(Cog_Extension):
                                 ) as setjson:
                                     jdata = json.load(setjson)
                                 status = jdata["STATUS"]
-                                status["PROHERTCOUNT"] = True
+                                status["PROPHERTCOUNT"] = True
                                 with open(
                                     "settings.json", "w", encoding="utf8"
                                 ) as setjson:
@@ -248,7 +248,7 @@ class Wolfkill_Witch(Cog_Extension):
                                 ) as setjson:
                                     jdata = json.load(setjson)
                                 status = jdata["STATUS"]
-                                status["PROHERTCOUNT"] = True
+                                status["PROPHERTCOUNT"] = True
                                 with open(
                                     "settings.json", "w", encoding="utf8"
                                 ) as setjson:
@@ -324,7 +324,7 @@ class Wolfkill_Witch(Cog_Extension):
                             with open("settings.json", "r", encoding="utf8") as setjson:
                                 jdata = json.load(setjson)
                             status = jdata["STATUS"]
-                            status["PROHERTCOUNT"] = True
+                            status["PROPHERTCOUNT"] = True
                             with open("settings.json", "w", encoding="utf8") as setjson:
                                 json.dump(jdata, setjson, indent=4)
                         else:

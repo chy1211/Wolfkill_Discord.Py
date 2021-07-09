@@ -210,7 +210,7 @@ class Wolfkill_Wolf(Cog_Extension):
                                 ) as setjson:
                                     jdata = json.load(setjson)
                                 status = jdata["STATUS"]
-                                status["PROHERTCOUNT"] = True
+                                status["PROPHERTCOUNT"] = True
                                 with open(
                                     "settings.json", "w", encoding="utf8"
                                 ) as setjson:
