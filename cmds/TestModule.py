@@ -9,7 +9,7 @@ with open("settings.json", "r", encoding="utf8") as setjson:
 global squad
 global votes
 squad = jdata["SQUAD"]
-EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟", "🇦"]
 votes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
 dc = discord
@@ -45,6 +45,7 @@ class TestModule(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, data):
+        print(data.emoji)
         if str(data.emoji) == "1️⃣":
             votes[0] += 1
         elif str(data.emoji) == "2️⃣":
