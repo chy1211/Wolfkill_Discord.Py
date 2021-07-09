@@ -10,7 +10,6 @@ dc = discord
 
 class Wolfkill_prophert(Cog_Extension):
     def killwolfkill():
-        print("killwolfkill has been called")
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
         status = jdata["STATUS"]
@@ -27,7 +26,6 @@ class Wolfkill_prophert(Cog_Extension):
                     break
 
     def killwitchkill():
-        print("killwitchkill has been called")
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
         status = jdata["STATUS"]
@@ -123,13 +121,13 @@ class Wolfkill_prophert(Cog_Extension):
                             setjson.close()
                         with open("settings.json", "r", encoding="utf8") as setjson:
                             jdata = json.load(setjson)
-                        Wolfkill_prophert.killwolfkill()
-                        Wolfkill_prophert.killwitchkill()
                         status = jdata["STATUS"]
                         status["DAWN"] = True
                         status["COUNTER"] = 0
                         with open("settings.json", "w", encoding="utf8") as setjson:
                             json.dump(jdata, setjson, indent=4)
+                    Wolfkill_prophert.killwolfkill()
+                    Wolfkill_prophert.killwitchkill()
 
         self.bg_task = self.bot.loop.create_task(prophert_count())
 
@@ -171,12 +169,12 @@ class Wolfkill_prophert(Cog_Extension):
                     with open("settings.json", "r", encoding="utf8") as setjson:
                         jdata = json.load(setjson)
                     status = jdata["STATUS"]
-                    Wolfkill_prophert.killwolfkill()
-                    Wolfkill_prophert.killwitchkill()
                     status["DAWN"] = True
                     status["COUNTER"] = 0
                     with open("settings.json", "w", encoding="utf8") as setjson:
                         json.dump(jdata, setjson, indent=4)
+                Wolfkill_prophert.killwolfkill()
+                Wolfkill_prophert.killwitchkill()
             else:
                 await ctx.send("找不到此玩家")
         else:
