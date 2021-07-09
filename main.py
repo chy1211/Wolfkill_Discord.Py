@@ -14,7 +14,8 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    print("Bot is now online!")
+    print("Bot 載入完成!")
+    print("Bot 現在正在線上")
 
 
 @bot.command()
@@ -37,6 +38,7 @@ async def reload(ctx, extension):
 
 for filename in os.listdir("./cmds"):
     if filename.endswith(".py"):
+        print(f"載入中,正在讀取{filename}")
         bot.load_extension(f"cmds.{filename[:-3]}")
 
 if __name__ == "__main__":
