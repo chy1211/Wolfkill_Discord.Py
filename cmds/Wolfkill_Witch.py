@@ -9,6 +9,48 @@ dc = discord
 
 
 class Wolfkill_Witch(Cog_Extension):
+    def indict(id):
+        with open("settings.json", "r", encoding="utf8") as setjson:
+            jdata = json.load(setjson)
+        squad_tean = jdata["SQUAD_TEAM"]
+        for key, value in squad_tean.items():
+            if value == id:
+                setjson.close()
+                return True
+        setjson.close()
+        return False
+
+    def killwolfkill():
+        with open("settings.json", "r", encoding="utf8") as setjson:
+            jdata = json.load(setjson)
+        status = jdata["STATUS"]
+        wolfkill = status["WOLFKILL"]
+        squad_team = jdata["SQUAD_TEAM"]
+        for key, value in squad_team.items():
+            if str(wolfkill) in value:
+                temp = value
+                temp.remove(f"{str(wolfkill)}")
+                squad_team[f"{key}"] = temp
+                with open("settings.json", "w", encoding="utf8") as setjson:
+                    jdata = json.dump(jdata, setjson, indent=4)
+                break
+
+    def killwitchkill():
+        with open("settings.json", "r", encoding="utf8") as setjson:
+            jdata = json.load(setjson)
+        status = jdata["STATUS"]
+        witchkill = status["WITCHKILL"]
+        squad_team = jdata["SQUAD_TEAM"]
+        for key, value in squad_team.items():
+            if str(witchkill) in value:
+                print(key, value)
+                temp = value.remove(witchkill)
+                print(temp)
+                squad_team[f"{key}"] = temp
+                with open("settings.json", "w", encoding="utf8") as setjson:
+                    jdata = json.dump(jdata, setjson, indent=4)
+                break
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -24,8 +66,9 @@ class Wolfkill_Witch(Cog_Extension):
                 await asyncio.sleep(1)
                 if status["WITCHCOUNT"] is True:
                     if status["WITCHPOISON"] and status["WITCHANTIDOTE"]:
+                        id = status["WOLFKILL"]
                         setjson.close()
-                        await self.channel.send("{玩家}被殺了,你要救嗎?")
+                        await self.channel.send(f"{id}被殺了,你要救嗎?")
                         await self.channel.send("你要毒誰嗎")
                         msg = await self.channel.send("思考時間倒數 : 10 秒")
                         for i in range(9, 0, -1):  # 思考時間
@@ -43,6 +86,7 @@ class Wolfkill_Witch(Cog_Extension):
                             status["WITCHCOUNT"] = False
                             with open("settings.json", "w", encoding="utf8") as setjson:
                                 json.dump(jdata, setjson, indent=4)
+                            Wolfkill_Witch.killwolfkill()
                             await self.channel.send("本回合沒做任何動作")
                             await self.channel.send("女巫請閉眼")
                             await asyncio.sleep(3)
@@ -51,8 +95,9 @@ class Wolfkill_Witch(Cog_Extension):
                         status["WITCHPOISON"] is False
                         and status["WITCHANTIDOTE"] is True
                     ):
+                        id = status["WOLFKILL"]
                         setjson.close()
-                        await self.channel.send("{玩家}被殺了,你要救嗎?")
+                        await self.channel.send(f"{id}被殺了,你要救嗎?")
                         msg = await self.channel.send("思考時間倒數 : 10 秒")
                         for i in range(9, 0, -1):  # 思考時間
                             await asyncio.sleep(0.9)
@@ -69,6 +114,7 @@ class Wolfkill_Witch(Cog_Extension):
                             status["WITCHCOUNT"] = False
                             with open("settings.json", "w", encoding="utf8") as setjson:
                                 json.dump(jdata, setjson, indent=4)
+                            Wolfkill_Witch.killwolfkill()
                             await self.channel.send("本回合沒做任何動作")
                             await self.channel.send("女巫請閉眼")
                             await asyncio.sleep(3)
@@ -95,6 +141,7 @@ class Wolfkill_Witch(Cog_Extension):
                             status["WITCHCOUNT"] = False
                             with open("settings.json", "w", encoding="utf8") as setjson:
                                 json.dump(jdata, setjson, indent=4)
+                            Wolfkill_Witch.killwolfkill()
                             await self.channel.send("本回合沒做任何動作")
                             await self.channel.send("女巫請閉眼")
                             await asyncio.sleep(3)
@@ -118,6 +165,7 @@ class Wolfkill_Witch(Cog_Extension):
                             status["WITCHCOUNT"] = False
                             with open("settings.json", "w", encoding="utf8") as setjson:
                                 json.dump(jdata, setjson, indent=4)
+                            Wolfkill_Witch.killwolfkill()
                             await self.channel.send("本回合沒做任何動作")
                             await self.channel.send("女巫請閉眼")
                             await asyncio.sleep(3)
@@ -183,70 +231,96 @@ class Wolfkill_Witch(Cog_Extension):
     async def wkill(self, ctx, id):
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
-        status = jdata["STATUS"]
-        if status["WITCHPOISON"] is True:
-            status["WITCHCOUNT"] = False
-            with open("settings.json", "w", encoding="utf8") as setjson:
-                json.dump(jdata, setjson, indent=4)
-            await ctx.send(f"本回合毒殺了殺了{id}")  # 毒殺
-            await ctx.send("女巫請閉眼")
-            await asyncio.sleep(3)
-            await ctx.channel.purge()
-            for channels in ctx.guild.channels:
-                if str(channels) == "你是女巫":
-                    with open("settings.json", "r", encoding="utf8") as setjson:
-                        jdata = json.load(setjson)
-                    dict = jdata["SQUAD_TEAM"]
-                    witch = dict["WITCH"]
-                    for i in witch:
-                        for member in ctx.guild.members:
-                            if str(member).startswith(str(i)):
-                                await channels.set_permissions(
-                                    member, read_messages=False, send_messages=False
-                                )
-                    setjson.close()
-            for channels in ctx.guild.channels:
-                if str(channels) == "你是預言家":
-                    with open("settings.json", "r", encoding="utf8") as setjson:
-                        jdata = json.load(setjson)
-                    dict = jdata["SQUAD_TEAM"]
-                    prohert = dict["PROPHET"]
-                    if len(prohert):
-                        for i in prohert:
-                            for member in ctx.guild.members:
-                                if str(member).startswith(str(i)):
-                                    await channels.set_permissions(
-                                        member, read_messages=True, send_messages=True
-                                    )
-                        setjson.close()
-                        with open("settings.json", "r", encoding="utf8") as setjson:
-                            jdata = json.load(setjson)
-                        status = jdata["STATUS"]
-                        status["PROHERTCOUNT"] = True
-                        with open("settings.json", "w", encoding="utf8") as setjson:
-                            json.dump(jdata, setjson, indent=4)
-                    else:
-                        with open("settings.json", "r", encoding="utf8") as setjson:
-                            jdata = json.load(setjson)
-                        status = jdata["STATUS"]
-                        status["DAWN"] = True
-                        status["COUNTER"] = 0
-                        with open("settings.json", "w", encoding="utf8") as setjson:
-                            json.dump(jdata, setjson, indent=4)
+        dict = jdata["SQUAD_TEAM"]
+        witch = dict["WITCH"]
+        if str(ctx.message.author.name) in witch:
+            status = jdata["STATUS"]
+            if Wolfkill_Witch.indict(id):
+                if status["WITCHPOISON"] is True:
+                    status["WITCHPOISON"] = False
+                    status["WITCHCOUNT"] = False
+                    status["WITCHKILL"] = str(id)
+                    with open("settings.json", "w", encoding="utf8") as setjson:
+                        json.dump(jdata, setjson, indent=4)
+                    Wolfkill_Witch.killwitchkill()
+                    await ctx.send(f"本回合毒殺了殺了{id}")  # 毒殺
+                    await ctx.send("女巫請閉眼")
+                    await asyncio.sleep(3)
+                    await ctx.channel.purge()
+                    for channels in ctx.guild.channels:
+                        if str(channels) == "你是女巫":
+                            with open("settings.json", "r", encoding="utf8") as setjson:
+                                jdata = json.load(setjson)
+                            dict = jdata["SQUAD_TEAM"]
+                            witch = dict["WITCH"]
+                            for i in witch:
+                                for member in ctx.guild.members:
+                                    if str(member).startswith(str(i)):
+                                        await channels.set_permissions(
+                                            member,
+                                            read_messages=False,
+                                            send_messages=False,
+                                        )
+                            setjson.close()
+                    for channels in ctx.guild.channels:
+                        if str(channels) == "你是預言家":
+                            with open("settings.json", "r", encoding="utf8") as setjson:
+                                jdata = json.load(setjson)
+                            dict = jdata["SQUAD_TEAM"]
+                            prohert = dict["PROPHET"]
+                            if len(prohert):
+                                for i in prohert:
+                                    for member in ctx.guild.members:
+                                        if str(member).startswith(str(i)):
+                                            await channels.set_permissions(
+                                                member,
+                                                read_messages=True,
+                                                send_messages=True,
+                                            )
+                                setjson.close()
+                                with open(
+                                    "settings.json", "r", encoding="utf8"
+                                ) as setjson:
+                                    jdata = json.load(setjson)
+                                status = jdata["STATUS"]
+                                status["PROHERTCOUNT"] = True
+                                with open(
+                                    "settings.json", "w", encoding="utf8"
+                                ) as setjson:
+                                    json.dump(jdata, setjson, indent=4)
+                            else:
+                                with open(
+                                    "settings.json", "r", encoding="utf8"
+                                ) as setjson:
+                                    jdata = json.load(setjson)
+                                status = jdata["STATUS"]
+                                status["DAWN"] = True
+                                status["COUNTER"] = 0
+                                with open(
+                                    "settings.json", "w", encoding="utf8"
+                                ) as setjson:
+                                    json.dump(jdata, setjson, indent=4)
 
+                else:
+                    await ctx.send("您沒有毒藥,無法毒殺!")
+            else:
+                await ctx.send("找不到此玩家")
         else:
-            await ctx.send("您沒有毒藥,無法毒殺!")
+            await ctx.send("您沒有權限使用此指令!")
 
     @commands.command()
-    async def save(self, ctx, id):
+    async def save(self, ctx):
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
         status = jdata["STATUS"]
         if status["WITCHANTIDOTE"] is True:
+            status["WITCHANTIDOTE"] = False
             status["WITCHCOUNT"] = False
+            id = status["WOLFKILL"]
+            await ctx.send(f"本回合將{id}救了起來!")
+            status["WOLFKILL"] = None
             with open("settings.json", "w", encoding="utf8") as setjson:
-                json.dump(jdata, setjson, indent=4)
-            await ctx.send(f"本回合將{id}救了起來!")  # 解救
+                json.dump(jdata, setjson, indent=4)  # 解救
             await ctx.send("女巫請閉眼")
             await asyncio.sleep(3)
             await ctx.channel.purge()

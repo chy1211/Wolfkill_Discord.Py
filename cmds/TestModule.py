@@ -61,7 +61,6 @@ class TestModule(Cog_Extension):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, data):
-        print(data.emoji)
         if str(data.emoji) == "1️⃣":
             votes[0] += 1
         elif str(data.emoji) == "2️⃣":

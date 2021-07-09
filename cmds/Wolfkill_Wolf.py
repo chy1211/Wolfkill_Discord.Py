@@ -43,8 +43,7 @@ class Wolfkill_Wolf(Cog_Extension):
     def wolfvote():
         with open("settings.json", "r", encoding="utf8") as setjson:
             jdata = json.load(setjson)
-        info = jdata["GAMEINFO"]
-        len = info[7]
+        len = jdata["GAMELEN"]
         team = Wolfkill_Wolf.indict()
         inrandom = random.sample(team, k=len)
         msg = "```diff\n-要殺誰?\n"
@@ -127,9 +126,6 @@ class Wolfkill_Wolf(Cog_Extension):
                     status["WOLFCOUNT"] = False
                     with open("settings.json", "w", encoding="utf8") as setjson:
                         json.dump(jdata, setjson, indent=4)
-                    await self.channel.send(
-                        f"本回合殺了 {str(reteam[vote.index(max(vote))])}"
-                    )
                     await self.channel.send("狼人請閉眼")
                     await asyncio.sleep(3)
                     await self.channel.purge()
