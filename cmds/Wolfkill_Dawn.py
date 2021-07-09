@@ -37,7 +37,7 @@ class Wolfkill_Dawn(Cog_Extension):
                         for i in displayplayer:
                             await self.channel.send(f"{i}被殺了!")
                     else:
-                        await self.channel.Send("天亮了,昨晚是個平安夜!")
+                        await self.channel.send("天亮了,昨晚是個平安夜!")
                     setjson.close()
                     with open("settings.json", "r", encoding="utf8") as setjson:
                         jdata = json.load(setjson)
